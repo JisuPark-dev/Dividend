@@ -9,7 +9,7 @@
 # API 명세서
 # 🎯 배당금 API
 
-## ✅ GET/finance/dividend?{companyName}
+## ✅ GET/finance/dividend/{companyName}
 ### 특정 회사의 배당금 내역 조회
 #### {companyName : "좋은회사", dividend :[{date:"2020.3.21",price:"2.00",..}]}
 #### 회사 이름과 배당금 지급 내역을 보여줌
