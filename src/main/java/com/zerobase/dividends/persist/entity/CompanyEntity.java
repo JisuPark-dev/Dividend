@@ -25,5 +25,12 @@ public class CompanyEntity {
         this.ticker = company.getTicker();
         this.name = company.getName();
     }
+
+    public static Company toCompany(CompanyEntity companyEntity) {
+        return new Company().builder()
+                .name(companyEntity.getName())
+                .ticker(companyEntity.getTicker())
+                .build();
+    }
 }
 

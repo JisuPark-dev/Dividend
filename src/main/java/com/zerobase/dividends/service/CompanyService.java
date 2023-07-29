@@ -8,11 +8,15 @@ import com.zerobase.dividends.persist.entity.CompanyEntity;
 import com.zerobase.dividends.persist.entity.DividendEntity;
 import com.zerobase.dividends.scraper.Scraper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.zerobase.dividends.persist.entity.CompanyEntity.toCompany;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +31,14 @@ public class CompanyService {
             throw new RuntimeException("already exist ticker -> " +ticker);
         }
         return this.storeCompanyAndDividend(ticker);
+    }
+
+    public Page<CompanyEntity> getAllCompany(final Pageable pageable) {
+        return this.companyRepository.findAll(pageable);
+//        List<CompanyEntity> companies = companyRepository.findAll();
+//        return companies.stream()
+//                .map(CompanyEntity::toCompany)
+//                .collect(Collectors.toList());
     }
 
     // 입력된 ticker를 통해서 회사도 저장하고, 회사 배당금 내역도 저장

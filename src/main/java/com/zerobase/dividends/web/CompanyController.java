@@ -3,6 +3,9 @@ package com.zerobase.dividends.web;
 import com.zerobase.dividends.model.Company;
 import com.zerobase.dividends.service.CompanyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +21,8 @@ public class CompanyController {
     }
 
     @GetMapping
-    public ResponseEntity<?> searchCompany() {
-        return null;
+    public ResponseEntity<?> searchCompany(final Pageable pageable) {
+        return ResponseEntity.ok(companyService.getAllCompany(pageable));
     }
 
     @PostMapping
