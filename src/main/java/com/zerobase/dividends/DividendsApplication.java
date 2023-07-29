@@ -8,6 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.IOException;
@@ -16,10 +17,6 @@ import java.io.IOException;
 public class DividendsApplication {
 
     public static void main(String[] args) {
-//        SpringApplication.run(DividendsApplication.class, args);
-        YahooFinanceScraper scraper = new YahooFinanceScraper();
-        var result = scraper.scrap(Company.builder().ticker("O").build());
-        System.out.println("result = " + result);
+        SpringApplication.run(DividendsApplication.class, args);
     }
-
 }

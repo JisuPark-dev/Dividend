@@ -1,5 +1,6 @@
 package com.zerobase.dividends.persist.entity;
 
+import com.zerobase.dividends.model.Dividend;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -23,4 +24,10 @@ public class DividendEntity {
     private Long companyId;
     private LocalDateTime dateTime;
     private String dividend;
+
+    public DividendEntity(Long companyId, Dividend dividend) {
+        this.companyId = companyId;
+        this.dateTime = dividend.getDate();
+        this.dividend = dividend.getDividend();
+    }
 }
