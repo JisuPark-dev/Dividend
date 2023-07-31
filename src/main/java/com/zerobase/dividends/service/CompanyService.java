@@ -7,7 +7,9 @@ import com.zerobase.dividends.persist.DividendRepository;
 import com.zerobase.dividends.persist.entity.CompanyEntity;
 import com.zerobase.dividends.persist.entity.DividendEntity;
 import com.zerobase.dividends.scraper.Scraper;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.collections4.Trie;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import static com.zerobase.dividends.persist.entity.CompanyEntity.toCompany;
 @Service
 @RequiredArgsConstructor
 public class CompanyService {
+    private final Trie trie;
     private final Scraper scraper;
     private final CompanyRepository companyRepository;
     private final DividendRepository dividendRepository;
@@ -35,10 +38,6 @@ public class CompanyService {
 
     public Page<CompanyEntity> getAllCompany(final Pageable pageable) {
         return this.companyRepository.findAll(pageable);
-//        List<CompanyEntity> companies = companyRepository.findAll();
-//        return companies.stream()
-//                .map(CompanyEntity::toCompany)
-//                .collect(Collectors.toList());
     }
 
     // 입력된 ticker를 통해서 회사도 저장하고, 회사 배당금 내역도 저장
@@ -61,6 +60,19 @@ public class CompanyService {
         this.dividendRepository.saveAll(dividendEntities);
 
         return company;
+    }
+
+    public void addAutoCompleteKeyword(String keyword) {
+        this.trie.put(keyword, null); // ticker의 키워드가 아니라, 회사명의 키워드임.
+    }
+
+    public List<String> autocomplete(String keyword) {
+        return (List<String>)this.trie.prefixMap(keyword).keySet()
+                .stream().collect(Collectors.toList());
+    }
+
+    public void deleteAutocompleteKeyword(String keyword) {
+        this.trie.remove(keyword);
     }
 
 }
