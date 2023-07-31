@@ -1,19 +1,11 @@
 package com.zerobase.dividends;
 
-import com.zerobase.dividends.model.Company;
-import com.zerobase.dividends.model.ScrapedResult;
-import com.zerobase.dividends.scraper.YahooFinanceScraper;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.io.IOException;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
+@EnableScheduling
 public class DividendsApplication {
 
     public static void main(String[] args) {

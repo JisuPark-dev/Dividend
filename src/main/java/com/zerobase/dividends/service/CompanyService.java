@@ -7,18 +7,16 @@ import com.zerobase.dividends.persist.DividendRepository;
 import com.zerobase.dividends.persist.entity.CompanyEntity;
 import com.zerobase.dividends.persist.entity.DividendEntity;
 import com.zerobase.dividends.scraper.Scraper;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.Trie;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.zerobase.dividends.persist.entity.CompanyEntity.toCompany;
 
 @Service
 @RequiredArgsConstructor
@@ -60,6 +58,14 @@ public class CompanyService {
         this.dividendRepository.saveAll(dividendEntities);
 
         return company;
+    }
+
+    public List<String> getCompanyNamesByKeyword(String keyword) {
+        Pageable limit = PageRequest.of(0, 10);
+        Page<CompanyEntity> companyEntities = this.companyRepository.findByNameStartingWithIgnoreCase(keyword, limit);
+        return companyEntities.stream()
+                .map(e -> e.getName())
+                .collect(Collectors.toList());
     }
 
     public void addAutoCompleteKeyword(String keyword) {

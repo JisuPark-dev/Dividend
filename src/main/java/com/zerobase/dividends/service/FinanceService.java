@@ -6,15 +6,12 @@ import com.zerobase.dividends.persist.DividendRepository;
 import com.zerobase.dividends.persist.entity.CompanyEntity;
 import com.zerobase.dividends.persist.entity.DividendEntity;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.zerobase.dividends.persist.entity.CompanyEntity.toCompany;
-import static com.zerobase.dividends.persist.entity.DividendEntity.toDividend;
 
 @Service
 @AllArgsConstructor

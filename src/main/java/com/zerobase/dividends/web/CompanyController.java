@@ -4,8 +4,6 @@ import com.zerobase.dividends.model.Company;
 import com.zerobase.dividends.service.CompanyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +15,7 @@ public class CompanyController {
     private final CompanyService companyService;
     @GetMapping("/autocomplete")
     public ResponseEntity<?> autoComplete(@RequestParam String keyword) {
-        return ResponseEntity.ok(this.companyService.autocomplete(keyword));
+        return ResponseEntity.ok(this.companyService.getCompanyNamesByKeyword(keyword));
     }
 
     @GetMapping
