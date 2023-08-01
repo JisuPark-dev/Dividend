@@ -22,7 +22,8 @@ public class ScraperScheduler {
     private final Scraper yahooFinanceScraper;
     private final DividendRepository dividendRepository;
     // 일정 주기마다 스크래핑 수행
-    @Scheduled(cron = "0 0 0 * * *")
+
+    @Scheduled(cron = "${scheduler.scrap.yahoo}")
     public void yahooFinanceScheduling() {
         log.info("scraping scheduler is started");
         // 저장된 회사 목록 조회
@@ -40,7 +41,7 @@ public class ScraperScheduler {
                     .map(e -> new DividendEntity(company.getId(), e))
                     // 엘리먼트 하나씩 디비든 레퍼지토리에 삽입
                     .forEach(e->{
-                        boolean exists = this.dividendRepository.existsByCompanyIdAndDate(e.getCompanyId(), e.getDateTime());
+                        boolean exists = this.dividendRepository.existsByCompanyIdAndDateTime(e.getCompanyId(), e.getDateTime());
                         if(!exists){
                             this.dividendRepository.save(e);
                         }
