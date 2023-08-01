@@ -32,6 +32,7 @@ public class AuthController {
         // 로그인용 API
         MemberEntity member = this.memberService.authenticate(request);
         String token = this.tokenProvider.generateToken(member.getUsername(), member.getRoles());
+        log.info("user login -> " + request.getUsername());
         return ResponseEntity.ok(token);
     }
 
