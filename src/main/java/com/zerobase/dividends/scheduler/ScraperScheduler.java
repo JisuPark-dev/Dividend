@@ -9,10 +9,13 @@ import com.zerobase.dividends.persist.entity.DividendEntity;
 import com.zerobase.dividends.scraper.Scraper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static com.zerobase.dividends.model.constants.CacheKey.KEY_FINANCE;
 
 @Slf4j
 @Component
@@ -21,8 +24,10 @@ public class ScraperScheduler {
     private final CompanyRepository companyRepository;
     private final Scraper yahooFinanceScraper;
     private final DividendRepository dividendRepository;
-    // 일정 주기마다 스크래핑 수행
 
+    // 일정 주기마다 스크래핑 수행
+    // 레디스 캐시에 있는 finance 값은 다 비운다는 뜻임.
+    @CacheEvict(value = KEY_FINANCE, allEntries = true)
     @Scheduled(cron = "${scheduler.scrap.yahoo}")
     public void yahooFinanceScheduling() {
         log.info("scraping scheduler is started");
