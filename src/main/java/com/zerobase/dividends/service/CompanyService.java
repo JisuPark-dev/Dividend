@@ -81,4 +81,14 @@ public class CompanyService {
         this.trie.remove(keyword);
     }
 
+    public String deleteCompany(String ticker) {
+        CompanyEntity company = this.companyRepository.findByTicker(ticker)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회사입니다."));
+        this.dividendRepository.deleteAllByCompanyId(company.getId());
+        this.companyRepository.delete(company);
+
+        this.deleteAutocompleteKeyword(company.getName());
+        return company.getName();
+    }
+
 }
