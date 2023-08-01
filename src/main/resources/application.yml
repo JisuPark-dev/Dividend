@@ -17,6 +17,8 @@ spring:
       use-new-id-generator-mappings: false
     show_sql: true
     defer-datasource-initialization: true
+  jwt:
+    secret: ZGF5b25lLXNwcmluZy1ib290LWRpdmlkZW5kLXByb2plY3QtdHV0b3JpYWwtand0LXNlcnZyZXQta2V5Cg==
 
 scheduler:
   scrap:
